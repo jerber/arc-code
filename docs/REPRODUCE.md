@@ -92,9 +92,9 @@ the pass the README reports (`v2sub` + `v2rest20`), the `lf52` retries, the
 Codex pass (`codex-v2`), the earlier-draft passes including `sealed3`, the
 older Codex comparison, and `maxeffort`. Against it, `score.py verify` checks
 the **69** official scores those runs carry, and `audit.py record` returns
-**158 of 171 clean** — twelve findings are the Codex answer-seeking described
-in the README, and one is a Claude session probing its own broker while
-diagnosing a connection.
+**158 of 171 clean** — eleven findings are the Codex answer-seeking described
+in the README, and two are agents probing their own broker while diagnosing a
+flaky connection (benign — the broker fails closed and returned nothing).
 
 The five pre-broker runs are not published: their workspaces hold live ARC
 session cookies, which is exactly the exposure the broker was built to end.
@@ -109,13 +109,14 @@ tokens, audit verdict).
 
 ## What is uncertain, stated plainly
 
-**None of the three brokered passes has an official receipt.** ARC discloses a
+**None of the three `sealed` passes has an official receipt.** ARC discloses a
 score only when a scorecard is closed, and reaps a card that goes fifteen
 minutes without an action. `sealed`, `sealed2` and `sealed3` all lost their
 cards that way — `sealed3`'s to a close that failed while being marked done,
 which is the bug the broker's watchdog now retries. So that draft's 97.3, the
-two broker-validation numbers, and both halves of the 99.9 pass@2 are
-reconstructions by the formula in `score.py`, not numbers ARC handed back.
+two broker-validation numbers, and both halves of the draft prompt's 99.9
+pass@2 are reconstructions by the formula in `score.py`, not numbers ARC
+handed back.
 
 **The formula is validated elsewhere, not on those passes.** `score.py verify`
 reproduces 81 of the 84 game scores ARC *has* disclosed — from my own
@@ -127,9 +128,9 @@ game that died and was retried, where my record cannot see the run boundary
 ARC recorded.
 
 **Finished games reconstruct exactly; unfinished ones do not.** 24 of the 25
-games in the headline pass were won, and those are exact. The 25th (`wa30`,
-7 of 9 levels) is an unfinished game of exactly the class `score.py` documents
-as unreliable — a `sk48`-sized miss would move 97.3 by about a quarter point,
+games in the headline pass were won, and those are exact. The 25th (`lf52`,
+5 of 10 levels) is an unfinished game of exactly the class `score.py` documents
+as unreliable — a `sk48`-sized miss would move 96.2 by about a quarter point,
 the worst death-boundary miss ever observed by about 1.4. The 24/25 wins are
 unaffected either way.
 
@@ -154,8 +155,14 @@ closed scorecards ARC returned for these runs. Every card that discloses a
 game's baselines agrees with every other, so they are treated as a property of
 the game and committed.
 
-**Comparison scope.** The 97.3 is one harness's single pass. Higher scores on
+**Comparison scope.** The 96.2 is one harness's single pass. Higher scores on
 the same 25 public games are published on ARC's community leaderboard —
 Tycho at 100.0, Retrodict at 99.9, baseline1 at 99.0 — and the set is
 saturating. What this repo is measuring is how small and general a harness can
 be while still scoring in that range, not a claim to the top of it.
+
+**"General-purpose" is demonstrated across models, asserted across tasks.**
+Nothing in the prompt or the rig names the environment, and Codex swaps in
+with one flag — that half is tested. The other half is not: this harness has
+only ever been pointed at ARC-AGI-3, so "swap the benchmark and the prompt
+travels unchanged" is a design claim awaiting a second environment.

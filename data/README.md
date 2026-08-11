@@ -2,7 +2,7 @@
 
 The [bundle](https://github.com/jerber/arc-code/releases) is the complete
 record — 171 sessions. These six are the ones the [README](../README.md) points
-at, copied out so you can read them without downloading a gigabyte.
+at, copied out so you can read them without downloading the bundle.
 
 Each folder is one session's workspace, flat, exactly as the agent left it:
 `notes.md` and the `.py` files it wrote, `logs.txt.gz` (every action and the

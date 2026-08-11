@@ -1,7 +1,11 @@
 # arc-code
 
 arc-code is a general-purpose harness for ARC-AGI-3. It scores **96.2 across
-the 25 public games**, winning 24 of 25, for about **$540**.
+the 25 public games**, winning 24 of 25, for about **$540**; pass@2 is 99.3,
+all 25 won. The same model under [ARC's model-only
+evaluation](https://arcprize.org/results/anthropic-claude-opus-5) — same 25
+games, same `high` reasoning effort, no harness — scores **30.2%**, and that
+is the best model-only result on the benchmark.
 
 The agent is stock Claude Code with almost nothing switched on. It runs headless
 with six tools pre-approved — Bash, Read, Write, Edit, Grep, Glob — and no MCP
@@ -17,16 +21,22 @@ soon as one of them scores. Every action and the board it produced gets appended
 to `logs.txt` by code, and that file is the agent's memory. It greps and parses
 its own history instead of trying to keep the whole game in context.
 
-I don't give it any game logic. There's no solver, no world model, no planner,
-no grid tooling. Opus 5 writes all of that itself, per game, and throws it away
-when the game ends.
+Nothing I wrote carries the score from 30.2 to 96.2. I don't give it any game
+logic — no solver, no world model, no planner, no grid tooling. Opus 5 writes
+all of that itself, per game: first a parser, then rules, then a simulator,
+then a search over the simulator — **294 programs in a single pass, ten times
+the harness itself** — and throws it all away when the game ends.
 
-That's the part I think is interesting. The same model with no harness scores
-[30.2%](https://arcprize.org/results/anthropic-claude-opus-5), and ARC-AGI-3 is
-built to measure exactly that difference — it asks an agent to ["explore novel
-environments, acquire goals on the fly, build adaptable world models, and learn
-continuously"](https://arcprize.org/arc-agi/3/). Some of what it wrote is worth
-reading: [the agent builds the machinery](#the-agent-builds-the-machinery).
+That's the claim this repo makes. The general-purpose harness has stopped
+being where the task gets solved; its job is to hand the model a shell, files,
+and an honest log, and the model writes the task-specific harness itself, at
+runtime, once per game. That is meta-learning in the plainest sense — the
+agent learns each game by first building the thing that learns it — and it is
+the ability ARC-AGI-3 was built to measure: an agent that can ["explore novel
+environments, acquire goals on the fly, build adaptable world models, and
+learn continuously"](https://arcprize.org/arc-agi/3/). Some of what got built
+is worth reading:
+[the agent builds the machinery](#the-agent-builds-the-machinery).
 
 Every game plays in its own sandbox that can't reach the internet, because a
 lot of what's online about these games amounts to an answer key. That part is
@@ -37,7 +47,9 @@ enforced rather than trusted: [sandboxing](#sandboxing).
 - **A prompt** ([`PROMPT.md`](PROMPT.md)) that never names the environment —
   method only: parse your log instead of reading it, keep findings in files,
   probe with 1–2 actions before committing 10–20. Swap ARC-AGI-3 for another
-  interactive benchmark and it travels unchanged. What *this* environment is
+  interactive benchmark and it travels unchanged — by construction, [not yet
+  by demonstration](docs/REPRODUCE.md#what-is-uncertain-stated-plainly); the
+  swap that is demonstrated is the model. What *this* environment is
   lives in an eleven-line brief ([`ARC.md`](ARC.md)) the launcher puts in front
   of it; the rest of the interface — how a board reads, what the log's markers
   mean — the actuator's log documents in its own opening lines. The prompt is
@@ -211,6 +223,13 @@ different route to the same place:
   general-purpose harness Prime Intellect built from scratch: recursion over
   context, sub-agents as function calls, and harness state the agent can rewrite
   mid-task. They report **95.5% RHAE Best@1 with Opus 5**.
+
+Put the numbers side by side and they say one thing: three general-purpose
+harnesses, built independently, none carrying a line of game-specific
+machinery, all land within a few points of the systems that do — and the
+model underneath scores 30.2 with no harness at all, the best bare-model
+result there is. Hand-building the machinery is now worth a few points.
+Giving a model room to build it is worth sixty-six.
 
 ## What agents write to their future selves
 
