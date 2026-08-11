@@ -1,0 +1,10 @@
+import drive
+drive.press(['ACTION2','ACTION2'],'L6k: bring loaded shuttle B down out of the col-18 branch')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)
+drive.press(['ACTION3','ACTION3','ACTION3'],'L6k: both loaded shuttles west; B to (15,7)')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)
+drive.press(['ACTION1','ACTION1'],'L6k: B up into the col-15 branch dock')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)
+drive.click((15,5),'L6k: unload B green over pivot (15,4) -> (15,3) (select)')
+drive.click((15,3),'L6k: land green at (15,3)')
+off,pegs,sh=drive.cur(); print('   after unload: off',off,'pegs',sorted(pegs),'sh',sh,flush=True)

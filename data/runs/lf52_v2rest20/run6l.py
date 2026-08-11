@@ -1,0 +1,12 @@
+import drive
+drive.press(['ACTION4','ACTION4','ACTION4','ACTION4'],'L6l: drive loaded shuttle A east to (18,7) - camera should reach 80')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)
+drive.press(['ACTION1','ACTION1'],'L6l: park A at the top of the col-18 branch (18,5)')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)
+drive.click((15,3),'L6l: load the green at (15,3) into shuttle B at (15,5) - B is at screen x=10 so its camera lock should be small (select)')
+drive.click((15,5),'L6l: land in B')
+off,pegs,sh=drive.cur(); print('   after load: off',off,'sh',sh,flush=True)
+drive.press(['ACTION2','ACTION2'],'L6l: B down to row 7')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)
+drive.press(['ACTION4','ACTION4','ACTION4'],'L6l: drive B east - camera should now go past 80')
+off,pegs,sh=drive.cur(); print('   FINAL off',off,'sh',sh,flush=True)

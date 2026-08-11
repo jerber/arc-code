@@ -1,0 +1,30 @@
+[project]
+name = "arc-code"
+version = "0.1.0"
+description = "A general agent harness for ARC-AGI-3: one prompt, one actuator, one agent"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "arc-agi>=0.9.9",
+    "pydantic>=2.13.4",
+    "python-dotenv>=1.0",
+    "requests>=2.32",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.0",
+]
+
+[tool.ruff]
+line-length = 100
+# Run artifacts include scripts the agent wrote; they are evidence and stay
+# exactly as it left them. Prose is laid out for reading, not for a formatter.
+extend-exclude = ["runs", "*.md"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
