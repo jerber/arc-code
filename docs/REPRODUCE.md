@@ -92,9 +92,9 @@ the pass the README reports (`v2sub` + `v2rest20`), the `lf52` retries, the
 Codex pass (`codex-v2`), the earlier-draft passes including `sealed3`, the
 older Codex comparison, and `maxeffort`. Against it, `score.py verify` checks
 the **69** official scores those runs carry, and `audit.py record` returns
-**158 of 171 clean** — eleven findings are the Codex answer-seeking described
+**158 of 171 clean**: eleven findings are the Codex answer-seeking described
 in the README, and two are agents probing their own broker while diagnosing a
-flaky connection (benign — the broker fails closed and returned nothing).
+flaky connection (benign; the broker fails closed and returned nothing).
 
 The five pre-broker runs are not published: their workspaces hold live ARC
 session cookies, which is exactly the exposure the broker was built to end.
@@ -163,6 +163,6 @@ be while still scoring in that range, not a claim to the top of it.
 
 **"General-purpose" is demonstrated across models, asserted across tasks.**
 Nothing in the prompt or the rig names the environment, and Codex swaps in
-with one flag — that half is tested. The other half is not: this harness has
+with one flag; that half is tested. The other half is not: this harness has
 only ever been pointed at ARC-AGI-3, so "swap the benchmark and the prompt
 travels unchanged" is a design claim awaiting a second environment.
