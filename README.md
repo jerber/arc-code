@@ -1,36 +1,32 @@
 # arc-code
 
-arc-code is a general-purpose harness for ARC-AGI-3. It scores **96.2 across
-the 25 public games**, winning 24 of 25, for about **$540**; pass@2 is 99.3,
-all 25 won. The same model under [ARC's model-only
-evaluation](https://arcprize.org/results/anthropic-claude-opus-5) — same 25
-games, same `high` reasoning effort, no harness — scores **30.2%**, and that
-is the best model-only result on the benchmark.
+Opus 5 scores
+[**30.2%**](https://arcprize.org/results/anthropic-claude-opus-5) on the 25
+public games of ARC-AGI-3 under ARC's model-only evaluation — the best
+bare-model result on the benchmark. Hand the same model a shell, a file
+system, and one command that plays the game, and it scores **96.2 on the
+same games** at the same `high` reasoning effort, winning 24 of 25, for
+about **$540** (pass@2: 99.3, all 25 won). Nothing I wrote closes that gap —
+no solver, no world model, no planner, no grid tooling. The model writes all
+of that itself, per game: first a parser, then rules, then a simulator, then
+a search over the simulator — **294 programs in one pass, ten times the size
+of the harness that launched them** — and throws it all away when the game
+ends.
 
-The agent is stock Claude Code with almost nothing switched on. It runs headless
-with six tools pre-approved — Bash, Read, Write, Edit, Grep, Glob — and no MCP
-servers, no subagents, no custom tools, no plugins or hooks. The model is Opus 5
-at its default thinking effort, `high`. Nothing is fine-tuned and no example of
-a solved game is ever shown to it.
+arc-code is the harness that lets it: stock Claude Code with almost nothing
+switched on — headless, six tools pre-approved (Bash, Read, Write, Edit,
+Grep, Glob), no MCP servers, no subagents, no custom tools, no plugins or
+hooks, the model at its default thinking effort. Nothing is fine-tuned and no
+example of a solved game is ever shown. Each game gets one session that plays
+it from first action to last, with a prompt that is method only — it never
+says what game is being played, or even that this is ARC. Every action and
+the board it produced is appended to `logs.txt` by code, and that file — not
+the context window — is the agent's memory, read back with grep and Python.
 
-The harness works by giving each game its own Claude Code session that plays it
-from the first action to the last. The prompt is method only — it never says
-what game is being played, or even that this is ARC. The agent's one way to
-touch the game is `./act`, a command that plays a batch of actions and stops as
-soon as one of them scores. Every action and the board it produced gets appended
-to `logs.txt` by code, and that file is the agent's memory. It greps and parses
-its own history instead of trying to keep the whole game in context.
-
-Nothing I wrote carries the score from 30.2 to 96.2. I don't give it any game
-logic — no solver, no world model, no planner, no grid tooling. Opus 5 writes
-all of that itself, per game: first a parser, then rules, then a simulator,
-then a search over the simulator — **294 programs in a single pass, ten times
-the harness itself** — and throws it all away when the game ends.
-
-That's the claim this repo makes. The general-purpose harness has stopped
-being where the task gets solved; its job is to hand the model a shell, files,
-and an honest log, and the model writes the task-specific harness itself, at
-runtime, once per game. That is meta-learning in the plainest sense — the
+The claim this repo makes: the general-purpose harness has stopped being
+where the task gets solved. Its job is to hand the model a shell, files, and
+an honest log; the model writes the task-specific harness itself, at runtime,
+once per game. That is meta-learning in the plainest sense — the
 agent learns each game by first building the thing that learns it — and it is
 the ability ARC-AGI-3 was built to measure: an agent that can ["explore novel
 environments, acquire goals on the fly, build adaptable world models, and
@@ -123,10 +119,10 @@ runs it, writes down what it learned, and keeps going — so by the end of a gam
 the folder holds a small program the agent wrote to solve that one game, and a
 `notes.md` recording what it had figured out.
 
-Across the pass the agents wrote **294 programs, about 14,600 lines** — ten
-times the size of the harness that launched them — and all 25 games got their
-own. Nothing in the prompt says to do this. It names no algorithm, and the only
-encouragement is one line saying shell and Python loops are allowed.
+By the end of the pass that was **294 programs, about 14,600 lines**, and all
+25 games had their own. Nothing in the prompt says to do this. It names no
+algorithm, and the only encouragement is one line saying shell and Python
+loops are allowed.
 
 ### One game, start to finish
 
@@ -254,14 +250,12 @@ but gets less back, because it stored intentions rather than facts. So it
 re-derives, and goes round again: on level 6 of one game it formed 133
 distinct plans and spent 700 actions where Claude needed 7 plans and 132.
 
-Doesn't an agent remember its own thinking? Not in any form it can use.
-Claude Code drops a turn's reasoning when the turn ends, and nothing in
-context is addressable by the agent's *code* — its scripts can grep
-`logs.txt`, not its context window. The plan is where current beliefs enter
-the permanent, greppable record, pinned beside the actions they explain. The
-harness supplies the channel; whether what lands there is worth anything is
-the model's contribution. A weaker agent does not fail loudly — it fills the
-mechanism with nothing.
+Doesn't an agent remember its own thinking? Not in any form it can use:
+reasoning is dropped when the turn ends, and its scripts can grep `logs.txt`,
+not its context window. The plan is where current beliefs enter the permanent,
+greppable record, pinned beside the actions they explain. The harness supplies
+the channel; what lands in it is the model's contribution — a weaker agent
+does not fail loudly, it fills the mechanism with nothing.
 
 ## When the model is certain and wrong
 
@@ -353,34 +347,23 @@ game key from before the broker existed — which is why it exists.
 Everything from the broker onward is published — a 42 MB archive on
 the [releases page](https://github.com/jerber/arc-code/releases), built by
 [`export.py`](rig/export.py): the pass above, the whole Codex comparison, the
-`lf52` attempts with their impossibility proofs and their breakthroughs, and
-every Codex breakout attempt.
-
-It also holds earlier passes, including one that scored 97.3. That one ran a
-draft of the prompt that still carried the interface facts — the action names,
-the board size, the color map — which have since moved into the brief and the
-log so the prompt names no environment at all. It's a point higher and well
-inside the variance, and it took a third more actions to get there. Each
-session in the bundle embeds the exact prompt it ran, so you can see which is
-which.
-
-The runs that predate the broker are held back, because their workspaces hold
-live ARC session cookies — which is the point of the broker, and why everything
-after it is publishable as it stands. The two Claude findings are in those
-held-back runs, and the behavior they were flagged for is the exposure the
-broker ended.
+`lf52` attempts with their impossibility proofs and their breakthroughs, every
+Codex breakout attempt, and the earlier passes — including a 97.3 from a
+prompt draft that still carried the interface facts (action names, board size,
+color map), since moved into the brief and the log. That one is a point
+higher, well inside the variance, and took a third more actions; each session
+embeds the exact prompt it ran. The runs that predate the broker are held
+back: their workspaces hold live ARC session cookies — the exposure the
+broker was built to end, and where the two Claude findings live.
 
 ARC discloses scores only on closed scorecards and reaps idle ones, so the
 scoring formula lives here ([`score.py`](rig/score.py)) and reproduces the
 official scores ARC did disclose, with every miss documented in code rather
-than fitted around. `score.py verify` checks it against your copy of the
-bundle.
-
-To check any of it, download the bundle, run `export.py verify` over it
-yourself, then `export.py load` it into a Postgres of your own — `score.py
-verify`, `score.py run` and `audit.py record` then work against your copy
-rather than my word for it. [`docs/REPRODUCE.md`](docs/REPRODUCE.md) has the
-sequence and the uncertainties, stated plainly.
+than fitted around. To take none of it on my word, download the bundle,
+verify it, and load it into a Postgres of your own — `score.py` and
+`audit.py` then run against your copy.
+[`docs/REPRODUCE.md`](docs/REPRODUCE.md) has the sequence and the
+uncertainties, stated plainly.
 
 ## Credit
 
