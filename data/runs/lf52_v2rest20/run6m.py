@@ -1,0 +1,10 @@
+import drive
+drive.press(['ACTION1','ACTION1'],'L6m: raise loaded shuttle A into the col-18 branch dock (18,5)')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)
+drive.press(['ACTION4'],'L6m: B east to (18,7) to push the camera further east')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)
+drive.press(['ACTION1'],'L6m: B up to (18,6) so it stays on the vertical branch and pins the camera')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)
+drive.click((18,5),'L6m: unload A green over pivot (18,4) -> (18,3) (select)')
+drive.click((18,3),'L6m: land green at (18,3)')
+off,pegs,sh=drive.cur(); print('   after: off',off,'pegs',sorted(pegs),'sh',sh,flush=True)
