@@ -4,6 +4,12 @@ The [README](../README.md) says what was found; this says how to run and check
 all of it. Every number in the README comes out of the commands below, from
 the stored record rather than from anyone's memory.
 
+There are two ways to reproduce this work. The release bundle reproduces the
+exact numbers reported in the README. You can also run the full experiment
+from scratch with your own keys and the same models, prompt, and 25 game
+versions. Fresh runs are nondeterministic, so they test whether the result
+replicates rather than promising the same decimal score.
+
 ## Setup
 
 Needs Python 3.13+, [uv](https://docs.astral.sh/uv/), and an
