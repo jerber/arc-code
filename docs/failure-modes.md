@@ -5,15 +5,14 @@ ARC-AGI-3 games. It won 177 sessions and did not win 14. The clearest repeated
 pattern in those 14 was early surrender: six sessions decided the current
 level was impossible and stopped with 1,391–2,218 of their 2,500 moves unused.
 
-In five of the six, the model had already written down something it did not
-understand but did not run the corresponding experiment. It knew its model was
-incomplete, but did not reliably turn that uncertainty into targeted
-exploration.
+In five of the six, the model had already recorded an unresolved question but
+did not run the corresponding experiment. It marked its model as incomplete,
+but did not reliably turn that uncertainty into targeted exploration.
 
-This is the longer version of [when the model is certain and
-wrong](../README.md#when-the-model-is-certain-and-wrong). The numbers come from
-the run database, and everything in quotes is the model's own writing. Three of
-the sessions below are published in full under
+This is the longer version of [when uncertainty does not lead to
+action](../README.md#when-uncertainty-does-not-lead-to-action). The numbers come
+from the run database, and everything in quotes is the model's own writing.
+Three of the sessions below are published in full under
 [`data/runs/`](../data/runs).
 
 Each ARC-AGI-3 game is an unexplained video game drawn on a 64×64 grid. The
@@ -194,8 +193,8 @@ winning runs instead turn uncertainty into actions: visit the unseen corridor,
 construct the state that should be impossible, or deliberately make the
 simulator disagree with the game.
 
-The model often knows that it does not know, but does not reliably direct its
-remaining budget at that uncertainty. The missing step is choosing an
+The model often records what remains unresolved, but does not reliably direct
+its remaining budget at that uncertainty. The missing step is choosing an
 information-gathering action, running it, and revising the model from the
 result. The transcript makes the gap unusually easy to observe: an unresolved
 question in `notes.md`, no corresponding experiment in the action log, and a
