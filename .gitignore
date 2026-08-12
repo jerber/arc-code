@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+.pytest_cache/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Secrets — never committed
+.env
+
+# Live workspaces, at the root only — data/runs/ holds published sessions and
+# an unanchored pattern would swallow those too.
+/runs/
+
+# export.py build products — the tarball ships via the releases page, never git
+/export/
+/export.tar.gz

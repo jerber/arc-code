@@ -1,0 +1,12 @@
+import drive
+drive.click((6,7),'L6F: green boards shuttle X at (8,7) over the red (select)'); drive.click((8,7),'L6F: land in X')
+drive.click((7,7),'L6F: red jumps over loaded X into shuttle Y at (9,7) (select)'); drive.click((9,7),'L6F: land in Y')
+off,pegs,sh=drive.cur(); print('   boarded: off',off,'sh',sh,flush=True)
+drive.press(['ACTION4']*7,'L6F: drive both loaded shuttles east')
+drive.press(['ACTION1','ACTION1'],'L6F: X up to the (15,5) dock')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)
+drive.click((15,5),'L6F: unload the green at (15,3) - keeps it on an ODD column (select)'); drive.click((15,3),'L6F: land')
+off,pegs,sh=drive.cur(); print('   off',off,'pegs',sorted(pegs),'sh',sh,flush=True)
+drive.press(['ACTION4','ACTION4','ACTION1','ACTION1'],'L6F: Y to the (18,5) dock')
+drive.click((18,5),'L6F: unload the RED at (18,3) - even column, the reusable ladder (select)'); drive.click((18,3),'L6F: land')
+off,pegs,sh=drive.cur(); print('   FINAL off',off,'pegs',sorted(pegs),'sh',sh,flush=True)

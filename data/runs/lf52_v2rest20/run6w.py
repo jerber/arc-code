@@ -1,0 +1,13 @@
+import drive
+drive.click((22,3),'L6w: red (22,3) jumps over green (23,3) -> (24,3) (select)')
+drive.click((24,3),'L6w: land red at (24,3)')
+drive.click((23,3),'L6w: green (23,3) jumps over red (24,3) -> (25,3) (select)')
+drive.click((25,3),'L6w: land green at (25,3)')
+off,pegs,sh=drive.cur(); print('   off',off,'pegs',sorted(pegs),'sh',sh,flush=True)
+drive.press(['ACTION2']*4+['ACTION3']*3+['ACTION1']*2,'L6w: bring the east shuttle to the (24,5) dock')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)
+drive.click((24,3),'L6w: load the RED at (24,3) down over pivot (24,4) into the east shuttle (select)')
+drive.click((24,5),'L6w: land red in the east shuttle')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)
+drive.press(['ACTION2','ACTION2','ACTION4','ACTION4','ACTION1','ACTION1','ACTION1','ACTION1'],'L6w: drive the red-carrying shuttle to (26,3) - camera should reach 98')
+off,pegs,sh=drive.cur(); print('   off',off,'sh',sh,flush=True)

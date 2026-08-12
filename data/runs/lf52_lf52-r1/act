@@ -1,0 +1,3 @@
+#!/bin/sh
+export ARCSEC_BROKER="https://<BROKER-HOST>" ARCSEC_GAME="lf52-271a04aa"
+exec python3 "/arc-code/runs/lf52-r1/lf52-271a04aa/client.py" "$@"
