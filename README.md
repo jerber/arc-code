@@ -86,7 +86,7 @@ default `high`, and Codex at `xhigh`; higher-effort runs are still to do.
 
 The Claude pass lost one game, `lf52`. Retrying that game once gives
 **pass@2 of 99.3** and 25/25 games won. The first failure is discussed below:
-[when the model is certain and wrong](#when-the-model-is-certain-and-wrong).
+[when uncertainty does not lead to action](#when-uncertainty-does-not-lead-to-action).
 
 ## Running it
 
