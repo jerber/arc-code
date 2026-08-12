@@ -196,11 +196,14 @@ The cleanest comparison is within Opus 5: 30.2% model-only, 96.2 here, and
 points. Most of the gap, though, appears when the model is allowed to build
 its own machinery during the run.
 
-## When the model is certain and wrong
+<a id="when-the-model-is-certain-and-wrong"></a>
+
+## When uncertainty does not lead to action
 
 The clearest recurring failure was a gap between uncertainty and action. Opus
-would write down that its model was incomplete, then keep searching inside that
-model—or stop—instead of using its remaining actions to test the model itself.
+would record an unresolved question or an incomplete part of its model, then
+keep searching within the model—or stop—instead of using its remaining actions
+to investigate the gap.
 
 `lf52` is a peg-solitaire game with ten levels. Level 6 adds a red piece and a
 world wider than the screen. Two agents mapped it, built simulators, searched
@@ -231,7 +234,7 @@ written this rule after level 4:
 
 Two levels later it concluded unsolvable, with 1,726 actions unspent and that
 line still sitting in the notes file it re-reads whenever its memory is
-trimmed. It represented the uncertainty correctly but did not act on it.
+trimmed. It had recorded the uncertainty but did not act on it.
 
 [`docs/failure-modes.md`](docs/failure-modes.md) works through all fourteen
 non-wins, including the failures that do not fit this pattern.
