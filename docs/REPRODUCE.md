@@ -65,9 +65,9 @@ Nothing depends on a sandbox surviving: every game writes itself to Postgres
 as it plays, so the record is complete even for runs whose machines are long
 gone.
 
-Start from the published bundle. It carries the record's own tables and every
-session's workspace, so the verification commands work against a database you
-control rather than mine:
+Once the release bundle is available, start from it. It will carry the record's
+own tables and every included session's workspace, so the verification commands
+work against a database you control rather than mine:
 
 ```bash
 export POSTGRES_DSN=postgres://...     # a Neon database of your own
@@ -87,19 +87,14 @@ uv run rig/score.py run sealed3            # 97.3, an earlier draft's pass
 uv run rig/audit.py record                 # re-grade every session's trace
 ```
 
-The bundle holds **171 sessions from the 23 runs that postdate the broker** —
-the pass the README reports (`v2sub` + `v2rest20`), the `lf52` retries, the
-Codex pass (`codex-v2`), the earlier-draft passes including `sealed3`, the
-older Codex comparison, and `maxeffort`. Against it, `score.py verify` checks
-the **69** official scores those runs carry, and `audit.py record` returns
-**158 of 171 clean**: eleven findings are the Codex answer-seeking described
-in the README, and two are agents probing their own broker while diagnosing a
-flaky connection (benign; the broker fails closed and returned nothing).
+The release bundle will include the pass the README reports (`v2sub` +
+`v2rest20`), the `lf52` retries, the Codex pass (`codex-v2`), the earlier-draft
+passes including `sealed3`, the older Codex comparison, and `maxeffort`. Once
+loaded, `score.py verify` checks every official score the bundle carries, and
+`audit.py record` re-grades every included session.
 
-The five pre-broker runs are not published: their workspaces hold live ARC
+The pre-broker runs will not be included: their workspaces hold live ARC
 session cookies, which is exactly the exposure the broker was built to end.
-Their absence also removes the two Claude findings from the bundle — the
-sessions that used the game key those runs kept in the workspace.
 
 `db.py pull` restores each game's workspace: `logs.txt` (the programmatic
 memory — every action and its result), `agent_stream.jsonl` (the agent's

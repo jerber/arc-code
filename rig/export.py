@@ -530,7 +530,7 @@ def bundle_readme(manifest: list[dict], total: int) -> str:
     sessions = len({(m["run"], m["game"]) for m in manifest})
     return f"""# arc-code — the record
 
-Every session this project ever ran, as the harness stored it.
+Every session selected for this bundle, as the harness stored it.
 {sessions} sessions, {len(manifest)} files, {total / 1e6:.0f} MB unpacked.
 
 ## Layout

@@ -12,12 +12,13 @@ writes those while it plays. In one pass it produced 269 programs—about
 12,700 lines, or ten times the size of the harness—and discarded all of them
 when their games ended.
 
-This repo contains the harness and the record of those runs. The score by
-itself is not the interesting part: several systems built specifically for
-ARC score this high or higher. What is unusual is where the ARC-specific
-machinery comes from. It is not built into the harness. Opus builds it during
-each game—a parser, a model of the rules, a simulator, and a search
-procedure—and throws it away afterward.
+This repo contains the harness and six complete session records. The full
+post-broker record will be released shortly. The score by itself is not the
+interesting part: several systems built specifically for ARC score this high
+or higher. What is unusual is where the ARC-specific machinery comes from. It
+is not built into the harness. Opus builds it during each game—a parser, a
+model of the rules, a simulator, and a search procedure—and throws it away
+afterward.
 
 [ARC-AGI-3 is designed](https://arcprize.org/arc-agi/3/) to measure learning
 on first contact: an agent has to explore a new environment, infer its goal
@@ -167,8 +168,9 @@ pass.
 The agents' `notes.md` files distinguish observations from guesses with labels
 such as "hypothesis, strong," "confirmed so far," "presumed," and "untested."
 Six complete workspaces are checked into [`data/runs/`](data/runs), including
-the notes, programs, action log, and full event stream. The published bundle
-contains the rest.
+the notes, programs, action log, and full event stream. The full post-broker
+record will be released shortly on the
+[releases page](https://github.com/jerber/arc-code/releases).
 
 ## Other harnesses
 
@@ -291,16 +293,15 @@ answer-seeking attempts above, two agents probing their own broker while
 debugging a failed connection, and two early Claude runs that used the game
 key before the broker existed.
 
-Everything from the introduction of the broker onward is published as a 42 MB
-archive on the [releases page](https://github.com/jerber/arc-code/releases).
-It includes the headline Claude pass, the Codex comparison, all four `lf52`
-attempts, the Codex breakout attempts, and earlier passes. One earlier prompt
-still included interface facts such as action names, board size, and the color
-map. It scored 97.3, about one point higher and within the observed variance,
-while using a third more actions. Each session contains the exact prompt it
-ran.
+The full post-broker record will be released shortly on the
+[releases page](https://github.com/jerber/arc-code/releases). It will include
+the headline Claude pass, the Codex comparison, all four `lf52` attempts, the
+Codex breakout attempts, and earlier passes. One earlier prompt still included
+interface facts such as action names, board size, and the color map. It scored
+97.3, about one point higher and within the observed variance, while using a
+third more actions. Each session contains the exact prompt it ran.
 
-The pre-broker workspaces are not published because they contain live ARC
+The pre-broker workspaces will not be included because they contain live ARC
 session cookies—the exposure the broker was written to remove.
 
 ARC only discloses scores on closed scorecards and removes idle ones, so
@@ -308,8 +309,8 @@ ARC only discloses scores on closed scorecards and removes idle ones, so
 reproduces 106 of the 111 scores ARC disclosed; the five misses are documented
 in the code rather than fitted away. [`export.py`](rig/export.py) builds and
 verifies the release archive, and [`docs/REPRODUCE.md`](docs/REPRODUCE.md)
-shows how to load it into a database, rerun the audit and scorer, and check the
-known uncertainties.
+shows how to load it into a database once released, rerun the audit and
+scorer, and check the known uncertainties.
 
 ## Credit
 
