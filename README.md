@@ -198,48 +198,43 @@ its own machinery during the run.
 
 ## When the model is certain and wrong
 
-`lf52` is a peg-solitaire game with ten levels. Level 6 introduces a red
-piece. Two agents, in separate sandboxes with the same prompt and model,
-mapped the level, wrote simulators, searched them, and concluded that the
-level was unsolvable. Their argument was internally sound: the west panel
-provided only one green peg, and every known way to scroll the camera left it
-on the wrong column. Both stopped with more than 1,700 of 2,500 actions
-unused.
+The clearest recurring failure was a gap between uncertainty and action. Opus
+would write down that its model was incomplete, then keep searching inside that
+model—or stop—instead of using its remaining actions to test the model itself.
 
-Two fresh runs found the missing rule. The red piece is a mobile wall: it can
-leapfrog a green peg without capturing it, letting a red-green pair walk a
-lone peg across the board. With that rule level 6 takes about 130 actions and
-the game finishes 10/10. Across four attempts, two solved it.
+`lf52` is a peg-solitaire game with ten levels. Level 6 adds a red piece and a
+world wider than the screen. Two agents mapped it, built simulators, searched
+them, and concluded that the level was impossible. Both stopped with more than
+1,700 of their 2,500 actions unused.
 
-That is the shape of nearly every loss. Of 191 Claude sessions, 14 did not
-win, and only four of those spent their action budget. Six stopped because
-the agent had concluded the level was impossible, walking away from a median
-of 2,000 of their 2,500 actions—though the prompt ends with *play until
-`./act status` reports you have won or the budget is spent*. Three of the six had spent **less** on the
-level that beat them than the average winning session spent on that same
-level. One declared level 8 of `bp35` to need an undiscovered mechanic after
-52 actions—inside the 20–64 it had spent on each level it did solve—and
-stopped with 2,162 in hand.
+One had marked *the red piece cannot board a shuttle* as verified after testing
+one way of moving it aboard. A winning run tried a different transition. The
+red is a mobile wall: a red-green pair can leapfrog across the board without
+consuming the green, and a shuttle can carry the red to where it is needed.
+Level 6 then takes about 130 actions, and the game can be completed 10/10.
+Across four attempts, two solved it.
 
-The right words about doubt are all there. They change nothing. The proofs
-carry the correct disclaimers—one is headed *IMPOSSIBILITY PROOF (within the
-verified model)*—and they name the experiments that would settle the
-question, at one to ten actions each. In five of the six, not one was tried.
+Across 191 Claude sessions, 14 did not win. Six were voluntary early exits:
+the agent concluded that the current level was impossible and stopped with
+1,391–2,218 actions unused. Three of the six had spent less on the level that
+beat them than winning sessions spent on average. One declared level 8 of
+`bp35` to need an undiscovered mechanic after 52 actions—inside the 20–64 it
+had spent on each level it solved—and stopped with 2,162 left.
 
-The clearest case is one of the two `lf52` agents above, which had written the
-rule down for itself after clearing level 4:
+Five of the six had already written down an unresolved question but did not run
+the corresponding experiment. The uncertainty was present in their notes. One
+conclusion was headed *IMPOSSIBILITY PROOF (within the verified model)* and
+ended "unless a mechanic outside this model exists." One `lf52` agent had also
+written this rule after level 4:
 
 > Don't conclude "unsolvable/isolated" until the whole world has been swept.
 
 Two levels later it concluded unsolvable, with 1,726 actions unspent and that
 line still sitting in the notes file it re-reads whenever its memory is
-trimmed. Producing the sentence and obeying it turn out to be separable
-skills.
+trimmed. It represented the uncertainty correctly but did not act on it.
 
 [`docs/failure-modes.md`](docs/failure-modes.md) works through all fourteen
-losses and what to make of them. It also rules out the obvious explanation:
-the losing runs did not explore less than the winners. They tried more of the
-games' inputs, not fewer.
+non-wins, including the failures that do not fit this pattern.
 
 ## Sandboxing
 
